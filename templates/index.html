@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Python</title>
+</head>
+<body>
+    <h1>Enter Text</h1>
+    <form id="textForm">
+        <input type="text" id="textInput" placeholder="Enter text">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById("textForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const textInput = document.getElementById("textInput").value;
+
+            fetch("/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ text: textInput }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("response").innerText = data.message;
+                });
+        });
+    </script>
+</body>
+</html>
